@@ -1,15 +1,49 @@
+import keyboarInput from "./keyboarInput.js";
+
 var arena = {
-  players: {},
-  foods: {}
+  players: {
+    player1: {x: 30, y:30}
+  },
+  foods: {},
+  movePlayer: function(playerid, command) {
+    var player = this.players[playerid];
+    switch (command) {
+      case "moveUp":
+        if (player.y > 0) {
+          player.y--;
+        }
+      break;
+      case "moveDown":
+        if (player.y < 100) {
+          player.y++;
+        }
+      break;
+      case "moveLeft":
+        if (player.x > 0) {
+          player.x--;
+        }
+      break;
+      case "moveRight":
+        if (player.x < 100) {
+          player.x++;
+        }
+      break;
+      default:
+    }
+  }
 };
 
 var config = {
-  playersColor: 'gray',
-  foodColor: 'green'
+  playersColor: "gray",
+  foodColor: "green"
 };
 
 var canvas = document.getElementById("screen");
 
+keyboarInput.registerPlayer("player1");
+keyboarInput.subscribeObserver(arena.movePlayer.bind(arena));
+
+document.addEventListener("keydown", keyboarInput.inputHandler);
 
 var renderArena = function(canvas, arena, config) {
   const context2D = canvas.getContext("2d");

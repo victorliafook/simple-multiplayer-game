@@ -1,6 +1,8 @@
 import keyboarInput from "./keyboarInput.js";
 
 var arena = {
+  width: 100,
+  height: 100,
   players: {},
   foods: {},
   movePlayer: function(playerid, command) {
@@ -12,7 +14,7 @@ var arena = {
         }
       break;
       case "moveDown":
-        if (player.y < 100) {
+        if (player.y < this.height - 1) {
           player.y++;
         }
       break;
@@ -22,7 +24,7 @@ var arena = {
         }
       break;
       case "moveRight":
-        if (player.x < 100) {
+        if (player.x < this.width - 1) {
           player.x++;
         }
       break;
@@ -32,7 +34,10 @@ var arena = {
 };
 
 const playerId = "player1";
-arena.players[playerId] = {x: 50, y:50};
+arena.players[playerId] = {
+  x: Math.floor(arena.width / 2), 
+  y: Math.floor(arena.height / 2)
+};
 
 var config = {
   playersColor: "gray",

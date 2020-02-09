@@ -1,9 +1,7 @@
 import keyboarInput from "./keyboarInput.js";
 
 var arena = {
-  players: {
-    player1: {x: 30, y:30}
-  },
+  players: {},
   foods: {},
   movePlayer: function(playerid, command) {
     var player = this.players[playerid];
@@ -33,6 +31,9 @@ var arena = {
   }
 };
 
+const playerId = "player1";
+arena.players[playerId] = {x: 50, y:50};
+
 var config = {
   playersColor: "gray",
   foodColor: "green"
@@ -40,7 +41,7 @@ var config = {
 
 var canvas = document.getElementById("screen");
 
-keyboarInput.registerPlayer("player1");
+keyboarInput.registerPlayer(playerId);
 keyboarInput.subscribeObserver(arena.movePlayer.bind(arena));
 
 document.addEventListener("keydown", keyboarInput.inputHandler);

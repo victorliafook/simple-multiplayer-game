@@ -1,9 +1,10 @@
-var commandMap = {
+const commandMap = {
   ArrowUp: "moveUp",
   ArrowDown: "moveDown",
   ArrowLeft: "moveLeft",
   ArrowRight: "moveRight"
 };
+
 var observers = [];
 var player;
 

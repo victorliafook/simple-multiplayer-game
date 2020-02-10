@@ -1,43 +1,5 @@
 import keyboarInput from "./keyboarInput.js";
-
-var arena = {
-  width: 100,
-  height: 100,
-  players: {},
-  foods: {},
-  movePlayer: function(playerid, command) {
-    var player = this.players[playerid];
-    switch (command) {
-      case "moveUp":
-        if (player.y > 0) {
-          player.y--;
-        }
-      break;
-      case "moveDown":
-        if (player.y < this.height - 1) {
-          player.y++;
-        }
-      break;
-      case "moveLeft":
-        if (player.x > 0) {
-          player.x--;
-        }
-      break;
-      case "moveRight":
-        if (player.x < this.width - 1) {
-          player.x++;
-        }
-      break;
-      default:
-    }
-  }
-};
-
-const playerId = "player1";
-arena.players[playerId] = {
-  x: Math.floor(arena.width / 2), 
-  y: Math.floor(arena.height / 2)
-};
+import gameArena from "./gameArena.js";
 
 var config = {
   playersColor: "gray",
@@ -45,17 +7,21 @@ var config = {
 };
 
 var canvas = document.getElementById("screen");
+gameArena.setDimensions(canvas.width, canvas.height);
+
+const playerId = "player1";
+gameArena.registerPlayer(playerId, Math.floor(canvas.width / 2), Math.floor(canvas.height / 2));
 
 keyboarInput.registerPlayer(playerId);
-keyboarInput.subscribeObserver(arena.movePlayer.bind(arena));
+keyboarInput.subscribeObserver(gameArena.movePlayer);
 
 document.addEventListener("keydown", keyboarInput.inputHandler);
 
 var renderArena = function(canvas, arena, config) {
   const context2D = canvas.getContext("2d");
   
-  const players = arena.players;
-  const foods = arena.foods;
+  const players = arena.getPlayers();
+  const foods = arena.getFoods();
   
   context2D.clearRect(0, 0, canvas.width, canvas.height);
   
@@ -76,5 +42,5 @@ var renderArena = function(canvas, arena, config) {
   });
 }
 
-renderArena(canvas, arena, config);
+renderArena(canvas, gameArena, config);
 
